@@ -1,4 +1,4 @@
-from src.ml_models.ModelEvaluator.resources.constants.validation_strategies import SUPPORTED_VALIDATION_STRATEGIES
+from resources.constants.validation_strategies import SUPPORTED_VALIDATION_STRATEGIES
 
 
 def raise_unsupported_validation_strategies(cv_method: str) -> None:

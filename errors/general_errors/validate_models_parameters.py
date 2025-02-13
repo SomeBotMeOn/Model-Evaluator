@@ -1,7 +1,7 @@
 from inspect import signature
 from typing import Dict, List, Any
 
-from src.ml_models.ModelEvaluator.resources.constants.all_models import \
+from resources.constants.all_models import \
     ALL_MODELS
 
 

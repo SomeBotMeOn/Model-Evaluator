@@ -4,7 +4,7 @@ from sklearn.utils import resample
 from sklearn.metrics import balanced_accuracy_score
 from collections import Counter
 
-from src.ml_models.ModelEvaluator.resources.constants.all_models import \
+from resources.constants.all_models import \
     ALL_MODELS
 
 

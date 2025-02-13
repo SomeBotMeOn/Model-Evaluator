@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.ml_models.ModelEvaluator.errors.ensembles_errors.config_errors.validate_ensemble_config import \
+from ..ensembles_errors.config_errors.validate_ensemble_config import \
     raise_validate_ensemble_config
 from ..models_errors.initialization_errors.target_column_not_found_error import \
     raise_target_column_not_found_error

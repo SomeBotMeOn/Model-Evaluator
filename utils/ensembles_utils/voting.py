@@ -3,9 +3,9 @@ import pandas as pd
 from sklearn.metrics import balanced_accuracy_score
 from collections import Counter
 
-from src.ml_models.ModelEvaluator.resources.constants.all_models import \
+from resources.constants.all_models import \
     ALL_MODELS
-from src.ml_models.ModelEvaluator.utils.general_utils.cross_validation import \
+from utils.general_utils.cross_validation import \
     get_cv_method
 
 

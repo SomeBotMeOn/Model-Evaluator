@@ -1,6 +1,4 @@
-import pandas as pd
-
-from src.ml_models.ModelEvaluator.errors.ensembles_errors.config_errors.validate_ensemble_config import \
+from ..ensembles_errors.config_errors.validate_ensemble_config import \
     raise_validate_ensemble_config
 
 
