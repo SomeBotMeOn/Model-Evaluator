@@ -1,6 +1,6 @@
 # Model Evaluator (0.0.2)
 
-Гибкий инструмент для сравнения моделей машинного обучения с поддержкой ансамблей, оптимизации гиперпараметров и валидации.
+Гибкий инструмент для оценки моделей машинного обучения с поддержкой ансамблей, оптимизации гиперпараметров и валидации.
 
 [![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)](https://www.python.org)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.6.1-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
