@@ -6,6 +6,11 @@ import numpy as np
 from tqdm import tqdm
 import optuna
 from optuna.logging import set_verbosity, CRITICAL
+from sklearn.metrics import (
+    silhouette_score,
+    calinski_harabasz_score,
+    davies_bouldin_score
+)
 
 from ..errors.ensembles_errors.config_errors.validate_ensemble_config import \
     raise_validate_ensemble_config
@@ -606,3 +611,78 @@ class ModelEvaluator:
             print('-' * 72)
 
         return best_models, pd.DataFrame(results).fillna('N/A')
+
+    def evaluate_clustering(
+            self,
+            metrics: list | None = None
+    ) -> pd.DataFrame:
+        """
+        Вычисляет метрики качества кластеризации и возвращает результаты в виде таблицы.
+
+        Параметры
+        ----------
+        metrics : list, optional [default=None]
+            Список метрик для расчета. Если None, используются все доступные:
+            ['silhouette', 'calinski_harabasz', 'davies_bouldin'].
+
+        Возвращает
+        -------
+        pd.DataFrame
+            DataFrame с результатами расчета метрик.
+
+        Пример
+        -------
+        >>> from sklearn.datasets import make_blobs
+        >>> from sklearn.cluster import KMeans
+
+        # Генерация тестовых данных
+        >>> X, _ = make_blobs(n_samples=500, centers=3, random_state=42)
+        >>> kmeans = KMeans(n_clusters=3, random_state=42)
+        >>> labels = kmeans.fit_predict(X)
+
+        # Расчет метрик
+        >>> metrics_df = evaluate_clustering(X, labels)
+        >>> print(metrics_df.round(3))
+                              Value
+        Metric
+        Silhouette Score      0.734
+        Calinski-Harabasz    565.411
+        Davies-Bouldin         0.554
+        """
+        X = self.data.drop(columns=[self.target_column])
+        labels = self.data[self.target_column]
+        available_metrics = {
+            'silhouette': silhouette_score,
+            'calinski_harabasz': calinski_harabasz_score,
+            'davies_bouldin': davies_bouldin_score
+        }
+
+        # Проверка и установка метрик по умолчанию
+        if metrics is None:
+            metrics = list(available_metrics.keys())
+        else:
+            metrics = [m.lower() for m in metrics]
+
+        results = {}
+
+        # Расчет выбранных метрик
+        for metric in metrics:
+            if metric not in available_metrics:
+                raise ValueError(
+                    f"Неизвестная метрика: {metric}. "
+                    f"Возможные метрики: {list(available_metrics.keys())}")
+
+            try:
+                score = available_metrics[metric](X, labels)
+                results[metric.replace('_', ' ').title()] = score
+            except Exception as e:
+                raise RuntimeError(
+                    f"Ошибка рассчета результата для {metric}: {str(e)}")
+
+        # Форматирование результатов в DataFrame
+        results_df = pd.DataFrame(
+            data={'Value': [round(val, 3) for val in results.values()]},
+            index=pd.Index(results.keys(), name='Metric')
+        )
+
+        return results_df
