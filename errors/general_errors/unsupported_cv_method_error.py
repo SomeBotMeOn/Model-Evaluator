@@ -1,5 +1,5 @@
-from resources.constants.cross_validation_methods import \
-    AVAIBLE_CROSS_VALIDATION_METHODS
+from ...resources.constants.cross_validation_methods import (
+    AVAIBLE_CROSS_VALIDATION_METHODS)
 
 
 def raise_unsupported_cv_method_error(cv_method: str) -> None:

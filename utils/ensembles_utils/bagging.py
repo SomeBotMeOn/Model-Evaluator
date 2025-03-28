@@ -4,8 +4,7 @@ from sklearn.utils import resample
 from sklearn.metrics import balanced_accuracy_score
 from collections import Counter
 
-from resources.constants.all_models import \
-    ALL_MODELS
+from ...resources.constants.all_models import ALL_MODELS
 
 
 def bagging_func(

@@ -3,9 +3,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import balanced_accuracy_score
 
-from resources.constants.all_models import \
+from ...resources.constants.all_models import \
     ALL_MODELS
-from resources.constants.models_without_random_state import \
+from ...resources.constants.models_without_random_state import \
     MODELS_WITHOUT_RANDOM_STATE
 
 

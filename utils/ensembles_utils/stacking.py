@@ -3,11 +3,11 @@ import numpy as np
 
 from sklearn.metrics import balanced_accuracy_score
 
-from resources.constants.all_models import \
+from ...resources.constants.all_models import \
     ALL_MODELS
-from resources.constants.models_without_random_state import \
+from ...resources.constants.models_without_random_state import \
     MODELS_WITHOUT_RANDOM_STATE
-from utils.general_utils.cross_validation import (
+from ...utils.general_utils.cross_validation import (
     get_cv_method
 )
 

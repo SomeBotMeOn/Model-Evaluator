@@ -1,8 +1,7 @@
 from inspect import signature
 from typing import Dict, List, Any
 
-from resources.constants.all_models import \
-    ALL_MODELS
+from ...resources.constants.all_models import ALL_MODELS
 
 
 def raise_validate_models_parameters(
