@@ -145,20 +145,6 @@ results_df
 
 #### Пример:
 ```python
-from sklearn.datasets import make_blobs
-from sklearn.cluster import KMeans
-import pandas as pd
-
-# Генерация данных
-X, _ = make_blobs(n_samples=500, centers=3, random_state=42)
-kmeans = KMeans(n_clusters=3, random_state=42)
-labels = kmeans.fit_predict(X)
-
-# Создание DataFrame
-data = pd.DataFrame(X, columns=['Feature1', 'Feature2'])
-data['Cluster'] = labels
-
-# Инициализация ModelEvaluator
 evaluator = ModelEvaluator(data=data, target_column='Cluster')
 
 # Расчет метрик
