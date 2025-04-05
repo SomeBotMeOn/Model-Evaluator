@@ -24,8 +24,8 @@ def raise_validate_ensemble_config(ensemble_config: dict) -> None:
                         'custom_name']
         },
         'Bagging': {
-            'required': ['base_model'],
-            'allowed': ['base_model', 'n_estimators', 'max_samples',
+            'required': ['base_models'],
+            'allowed': ['base_models', 'n_estimators', 'max_samples',
                         'max_features',
                         'bootstrap', 'bootstrap_features', 'custom_name']
         },
