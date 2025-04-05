@@ -94,7 +94,7 @@ def stacking_func(
     meta_features_train = np.zeros((X.shape[0], len(base_models)))
 
     # Основной цикл кросс-валидации
-    for fold_idx, (train_idx, val_idx) in enumerate(cv.split(X)):
+    for fold_idx, (train_idx, val_idx) in enumerate(cv.split(X, y)):
         X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
         y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
 
