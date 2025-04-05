@@ -35,14 +35,19 @@ def objective_wrapper(
         float: Среднее значение метрики по кросс-валидации.
     """
     model = None
-    # Генерация гиперпараметров на основе конфигурации
     params = {}
-    for param_name, param_code in optuna_config[model_name].items():
+
+    for param_name, param_value in optuna_config[model_name].items():
         try:
-            params[param_name] = eval(
-                param_code,
-                {'trial': trial, 'optuna': optuna}
-            )
+            # Если параметр представлен строкой - исполняем код через eval
+            if isinstance(param_value, str):
+                params[param_name] = eval(
+                    param_value,
+                    {'trial': trial, 'optuna': optuna}
+                )
+            # Иначе используем значение напрямую (статический параметр)
+            else:
+                params[param_name] = param_value
         except Exception as e:
             raise_parameter_suggestion_error(model_name, param_name, e)
 
