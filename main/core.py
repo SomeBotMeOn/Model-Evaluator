@@ -396,7 +396,7 @@ class ModelEvaluator:
 
         # Bagging
         bagging = ensemble_config.get('Bagging', {})
-        models.update(bagging.get('base_model', {}))
+        models.update(bagging.get('base_models', {}))
 
         # Voting
         voting = ensemble_config.get('Voting', {})
