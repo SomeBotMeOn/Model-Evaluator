@@ -28,7 +28,7 @@ def blending_func(
         Конфигурация ансамбля с параметрами:
         - base_models: Словарь базовых моделей в формате {'название_модели': параметры}
         - meta_model: Мета-модель в формате {'название_модели': параметры}
-        - test_size: Доля тестовой выборки (по умолчанию 0.3)
+        - test_size: Доля тестовой выборки (по умолчанию 0.2)
         - n_splits: Количество случайных разбиений (по умолчанию 1)
         - custom_name: Название метода (по умолчанию 'Blending')
     random_state : int, опционально
@@ -63,7 +63,7 @@ def blending_func(
     base_models = params.get('base_models')
     meta_model = params.get('meta_model')
     custom_name = params.get('custom_name', 'Blending')
-    test_size = params.get('test_size', 0.3)
+    test_size = params.get('test_size', 0.2)
     n_splits = params.get('n_splits', 1)
 
     scores = []
