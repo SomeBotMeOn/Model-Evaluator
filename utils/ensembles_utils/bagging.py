@@ -24,7 +24,7 @@ def bagging_func(
         Целевая переменная
     ensemble_config : dict
         Конфигурация с параметрами:
-        - base_model: Базовая модель в формате {'название_модели': параметры}
+        - base_models: Базовая модель в формате {'название_модели': параметры}
         - n_estimators: Количество моделей в ансамбле (по умолчанию 10)
         - max_samples: Размер бутстрэп выборки (по умолчанию 1.0)
         - max_features: Доля признаков для выборки (по умолчанию 1.0)
@@ -48,7 +48,7 @@ def bagging_func(
     --------
     >>> config = {
     ...     'Bagging': {
-    ...         'base_model': {'DecisionTree': {'max_depth': 5}},
+    ...         'base_models': {'DecisionTree': {'max_depth': 5}},
     ...         'n_estimators': 20,
     ...         'max_samples': 0.8
     ...     }
@@ -56,7 +56,7 @@ def bagging_func(
     """
     # Извлечение параметров
     params = ensemble_config.get('Bagging')
-    base_model = params.get('base_model')
+    base_models = params.get('base_models')
     custom_name = params.get('custom_name', 'Bagging')
     n_estimators = params.get('n_estimators', 10)
     max_samples = params.get('max_samples', 1.0)
@@ -65,20 +65,22 @@ def bagging_func(
     bootstrap_features = params.get('bootstrap_features', False)
 
     # Инициализация базовой модели
-    model_name, model_params = list(base_model.items())[0]
+    model_name, model_params = list(base_models.items())[0]
     BaseModel = ALL_MODELS[model_name]
 
     estimators = []
     rng = np.random.RandomState(random_state)
 
-    # Обучение ансамбля
     for i in range(n_estimators):
-        # Генерация бутстрэп выборки
+        # Уникальный seed для каждой итерации
+        iter_seed = rng.randint(0, 10 ** 6)
+
+        # Бутстрэп выборка
         X_sample, y_sample = resample(
             X, y,
             replace=bootstrap,
             n_samples=int(max_samples * len(X)),
-            random_state=random_state
+            random_state=iter_seed  # Динамический seed
         )
 
         # Выбор признаков
@@ -91,8 +93,12 @@ def bagging_func(
             )
             X_sample = X_sample[features]
 
-        # Создание и обучение модели
-        model = BaseModel(**model_params)
+        # Динамический random_state для модели
+        model_params_iter = model_params.copy()
+        if 'random_state' in model_params_iter:
+            model_params_iter['random_state'] = iter_seed
+
+        model = BaseModel(**model_params_iter)
         model.fit(X_sample, y_sample)
         estimators.append((model, features if max_features < 1.0 else None))
 
